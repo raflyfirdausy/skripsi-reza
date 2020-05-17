@@ -1,0 +1,20 @@
+
+Abdulloh, R. 2016. Easy & Simple Web Programming. Jakarta: Pt Elex Media
+Komputindo
+
+Yudhanto, Y., & Prasetyo, A. H. 2018. Panduan Mudah Belajar Framework
+Laravel. Jakarta: Pt Elex Media Komputindo
+
+Sidik, B. (2018). Framework CodeIgniter 3. Bandung: INFORMATIKA
+
+Budiyanto, & Ardhana, Y. M. (2018). PROJECT PHP : MEMBANGUN SISTEM
+INFORMASI AKADEMIK DENGAN FRAMEWORK CODEIGNITER.
+Yogyakarta: CV. LANGIT INSPIRASI
+
+Sulistiono, H. (2018). Coding Mudah dengan CodeIgniter, JQuery, Bootsrap, dan
+Datatable. Jakarta: PT Elex Media Komputindo, Gramedia
+
+Rosa, A. S., & Shalahuddin, M. (2018). Rekayasa Perangkat Lunak Terstruktur dan
+Berorientasi Objek. Bandung: INFORMATIKA
+
+Sugiyono. 2018. Metode Penelitian Kuantitatif. Bandung: Alfabeta

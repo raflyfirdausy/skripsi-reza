@@ -1,0 +1,15 @@
+AKSES LEVEL 2
+1. Staff Asset (data asset, peminjaman, laporan)
+2. Sekretaris Desa (laporan)
+
+ASSET DESA :
+1. Ada 5 form -> CRUD
+2. EXPORT -> pada menu sendiri di menu laporan
+
+PINJAM :
+1. Kode Peminjaman (Generate)
+2. Nama Barang (diambil dr database)
+3. Nama peminjam
+4. Keperluan peminjaman
+5. Jumlah Peminjaman (misal 10 kursi)
+5. Waktu pinjam dan kembali
