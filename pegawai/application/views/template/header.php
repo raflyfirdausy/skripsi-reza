@@ -45,7 +45,7 @@
                     <div class="navbar-brand">
                         <a href="index.html" class="logo">
                             <span class="logo-text">
-                                <h3 class="text-white m-l-5">Sistem Pegawai</h3>
+                                <h3 class="text-white m-l-5">Inventaris Aset</h3>
                             </span>
                         </a>
                         <a class="sidebartoggler d-none d-md-block" href="javascript:void(0)" data-sidebartype="mini-sidebar">
@@ -63,7 +63,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="<?= asset('website/img/default.png') ?>" alt="user" class="rounded-circle" width="40">
-                                <span class="m-l-5 font-medium d-none d-sm-inline-block"><?= $user_data->gelardepan_user . " " . $user_data->nama_user . " " . $user_data->gelarbelakang_user ?> <i class="mdi mdi-chevron-down"></i></span>
+                                <span class="m-l-5 font-medium d-none d-sm-inline-block"><?= $user_data->nama_admin ?> <i class="mdi mdi-chevron-down"></i></span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                                 <span class="with-arrow">
@@ -74,8 +74,8 @@
                                         <img src="<?= asset('website/img/default.png') ?>" alt="user" class="rounded-circle" width="60">
                                     </div>
                                     <div class="m-l-10">
-                                        <h4 class="mb-0"><?= $user_data->gelardepan_user . " " . $user_data->nama_user . " " . $user_data->gelarbelakang_user ?></h4>
-                                        <p class=" mb-0"><?= $user_data->nama_jabatan ?></p>
+                                        <h4 class="mb-0"><?= $user_data->nama_admin ?></h4>
+                                        <p class=" mb-0"><?= $user_data->level_admin == 1 ? "Staff" : "Sekretaris" ?></p>
                                     </div>
                                 </div>
 

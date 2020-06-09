@@ -6,6 +6,7 @@ class Admin_Controller extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model("Barang_model", "barang");
         if (!$this->session->has_userdata('login_pegawai')) {
             redirect(base_url("auth/login"));
         }

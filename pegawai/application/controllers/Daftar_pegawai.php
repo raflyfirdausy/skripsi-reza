@@ -29,7 +29,7 @@ class Daftar_pegawai extends Admin_Controller
 
         $data["jabatan"]        = $jabatan;
         $data["dataPegawai"]    = $dataPegawai;
-        $this->loadViewAdmin("dashboard/daftar_pegawai", $data);
+        $this->loadViewAdmin("dashboard/daftar_pegawai", $data);    
     }
 
     public function export()

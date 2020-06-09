@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -58,3 +58,6 @@ $route['ganti-password']['post']  = 'Ganti_password/ubah_password';
 
 $route['auth/register']['post']   = 'auth/proses_register';
 $route['dokumen-pegawai/detail/(:any)']['post'] = "dokumen-pegawai/hapus";
+
+$route['tanah/tambah']['post']          = 'tanah/proses_tambah';
+$route['tanah/edit/(:any)']['post']     = 'tanah/proses_edit';
