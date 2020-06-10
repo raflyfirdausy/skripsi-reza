@@ -64,3 +64,6 @@ $route['tanah/edit/(:any)']['post']     = 'tanah/proses_edit';
 
 $route['peralatan/tambah']['post']      = 'peralatan/proses_tambah';
 $route['peralatan/edit/(:any)']['post'] = 'peralatan/proses_edit';
+
+$route['bangunan/tambah']['post']       = 'bangunan/proses_tambah';
+$route['bangunan/edit/(:any)']['post']  = 'bangunan/proses_edit';

@@ -29,7 +29,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="<?= base_url("bangunan") ?>"  class="sidebar-link">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu">Bangunan dan Gedung </span>
                             </a>

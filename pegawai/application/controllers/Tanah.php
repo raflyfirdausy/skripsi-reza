@@ -32,7 +32,7 @@ class Tanah extends Admin_Controller
             $dataInsertBarang = [
                 "id_jenis"          => "1",
                 "nama_barang"       => $input->nama_barang,
-                "kode_barang"       => $input->kode_barang,
+                // "kode_barang"       => $input->kode_barang,
                 "register_barang"   => $input->register_barang,
                 "keterangan_barang" => $input->keterangan_barang,
             ];
@@ -86,7 +86,7 @@ class Tanah extends Admin_Controller
             "register_barang"   => $input->register_barang,
             "keterangan_barang" => $input->keterangan_barang
         ];
-        
+
         $updateBarang = $this->barang->update($dataUpdateBarang, $input->id_barang);
         if ($updateBarang) {
             //TODO : UPDATE DETAIL BARANG

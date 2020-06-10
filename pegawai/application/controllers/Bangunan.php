@@ -1,24 +1,24 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Peralatan extends Admin_Controller
+class Bangunan extends Admin_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("Detail_peralatan_model", "alat");
+        $this->load->model("Detail_bangunan_model", "bangunan");
     }
 
     public function index()
     {
-        $data["alat"]  = $this->alat->show();
+        $data["bangunan"]  = $this->bangunan->show();
         // d($data);
-        $this->loadViewAdmin("alat/index", $data);
+        $this->loadViewAdmin("bangunan/index", $data);
     }
 
     public function tambah()
     {
-        $this->loadViewAdmin("alat/tambah");
+        $this->loadViewAdmin("bangunan/tambah");
     }
 
     public function proses_tambah()
@@ -29,7 +29,7 @@ class Peralatan extends Admin_Controller
         if (!$cekBarang) {
             //* TODO : INSERT INTO TABLE BARANG
             $dataInsertBarang = [
-                "id_jenis"          => "2",
+                "id_jenis"          => "3",
                 "nama_barang"       => $input->nama_barang,
                 "kode_barang"       => $input->kode_barang,
                 "register_barang"   => $input->register_barang,
@@ -38,20 +38,21 @@ class Peralatan extends Admin_Controller
             $insertBarang = $this->barang->insert($dataInsertBarang);
             if ($insertBarang) {
                 $dataInsert = [
-                    "id_barang"         => $insertBarang,
-                    "merk_peralatan"    => $input->merk_peralatan,
-                    "ukuran_peralatan"  => $input->ukuran_peralatan,
-                    "bahan_peralatan"   => $input->bahan_peralatan,
-                    "tahun_peralatan"   => $input->tahun_peralatan,
-                    "nopabrik_peralatan" => $input->nopabrik_peralatan,
-                    "norangka_peralatan" => $input->norangka_peralatan,
-                    "nomesin_peralatan" => $input->nomesin_peralatan,
-                    "nopolisi_peralatan" => $input->nopolisi_peralatan,
-                    "nobpkb_peralatan"  => $input->nobpkb_peralatan,
-                    "asal_peralatan"    => $input->asal_peralatan,
-                    "harga_peralatan"   => $input->harga_peralatan,
+                    "id_barang"                 => $insertBarang,
+                    "kondisi_bangunan"          => $input->kondisi_bangunan,
+                    "bertingkat_bangunan"       => $input->bertingkat_bangunan,
+                    "beton_bangunan"            => $input->beton_bangunan,
+                    "luaslantai_bangunan"       => $input->luaslantai_bangunan,
+                    "letak_bangunan"            => $input->letak_bangunan,
+                    "dokumentanggal_bangunan"   => $input->dokumentanggal_bangunan,
+                    "dokumenno_bangunan"        => $input->dokumenno_bangunan,
+                    "luastanah_bangunan"        => $input->luastanah_bangunan,
+                    "statustanah_bangunan"      => $input->statustanah_bangunan,
+                    "nomor_bangunan"            => $input->nomor_bangunan,
+                    "asal_bangunan"             => $input->asal_bangunan,
+                    "harga_bangunan"            => $input->harga_bangunan,
                 ];
-                $insert = $this->alat->insert($dataInsert);
+                $insert = $this->bangunan->insert($dataInsert);
                 if ($insert) {
                     $this->session->set_flashdata("sukses", "Berhasil menambahkan data " . $input->nama_barang);
                 } else {
@@ -63,7 +64,7 @@ class Peralatan extends Admin_Controller
         } else {
             $this->session->set_flashdata("gagal", "Kode barang sudah terdaftar pada " . $cekBarang->nama_barang . ". Silahkan gunakan kode barang yang lain");
         }
-        redirect(base_url("peralatan/tambah"));
+        redirect(base_url("bangunan/tambah"));
     }
 
     public function detail($kode = null)
@@ -71,11 +72,11 @@ class Peralatan extends Admin_Controller
         $cekBarang  = $this->barang->where(["kode_barang" => $kode])->get();
         if (!$cekBarang) {
             $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
-            redirect(base_url("tanah"));
+            redirect(base_url("bangunan"));
         }
-        $data["alat"]  = $this->alat->show($cekBarang->id_barang);
+        $data["bangunan"]  = $this->bangunan->show($cekBarang->id_barang);
         // d($data);
-        $this->loadViewAdmin("alat/detail", $data);
+        $this->loadViewAdmin("bangunan/detail", $data);
     }
 
     public function edit($kode = null)
@@ -83,10 +84,10 @@ class Peralatan extends Admin_Controller
         $cekBarang  = $this->barang->where(["kode_barang" => $kode])->get();
         if (!$cekBarang) {
             $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
-            redirect(base_url("peralatan"));
+            redirect(base_url("bangunan"));
         }
-        $data["alat"]  = $this->alat->show($cekBarang->id_barang);
-        $this->loadViewAdmin("alat/edit", $data);
+        $data["bangunan"]  = $this->bangunan->show($cekBarang->id_barang);
+        $this->loadViewAdmin("bangunan/edit", $data);
     }
 
     public function proses_edit()
@@ -103,22 +104,23 @@ class Peralatan extends Admin_Controller
         $updateBarang = $this->barang->update($dataUpdateBarang, $input->id_barang);
         if ($updateBarang) {
             $dataUpdateDetail = [
-                "merk_peralatan"    => $input->merk_peralatan,
-                "ukuran_peralatan"  => $input->ukuran_peralatan,
-                "bahan_peralatan"   => $input->bahan_peralatan,
-                "tahun_peralatan"   => $input->tahun_peralatan,
-                "nopabrik_peralatan" => $input->nopabrik_peralatan,
-                "norangka_peralatan" => $input->norangka_peralatan,
-                "nomesin_peralatan" => $input->nomesin_peralatan,
-                "nopolisi_peralatan" => $input->nopolisi_peralatan,
-                "nobpkb_peralatan"  => $input->nobpkb_peralatan,
-                "asal_peralatan"    => $input->asal_peralatan,
-                "harga_peralatan"   => $input->harga_peralatan,
+                "kondisi_bangunan"          => $input->kondisi_bangunan,
+                "bertingkat_bangunan"       => $input->bertingkat_bangunan,
+                "beton_bangunan"            => $input->beton_bangunan,
+                "luaslantai_bangunan"       => $input->luaslantai_bangunan,
+                "letak_bangunan"            => $input->letak_bangunan,
+                "dokumentanggal_bangunan"   => $input->dokumentanggal_bangunan,
+                "dokumenno_bangunan"        => $input->dokumenno_bangunan,
+                "luastanah_bangunan"        => $input->luastanah_bangunan,
+                "statustanah_bangunan"      => $input->statustanah_bangunan,
+                "nomor_bangunan"            => $input->nomor_bangunan,
+                "asal_bangunan"             => $input->asal_bangunan,
+                "harga_bangunan"            => $input->harga_bangunan,
             ];
-            $updateDetail = $this->alat->update($dataUpdateDetail, $input->id_detail);
+            $updateDetail = $this->bangunan->update($dataUpdateDetail, $input->id_detail);
             if ($updateDetail) {
                 $this->session->set_flashdata('sukses', 'Data berhasil diperbaharui!');
-                redirect('peralatan');
+                redirect('bangunan');
             } else {
                 $this->session->set_flashdata('gagal', 'Data gagal diperbarui');
                 redirect($_SERVER['HTTP_REFERER']);
@@ -134,7 +136,7 @@ class Peralatan extends Admin_Controller
         $cekBarang  = $this->barang->where(["kode_barang" => $kode])->get();
         if (!$cekBarang) {
             $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
-            redirect(base_url("tanah"));
+            redirect(base_url("bangunan"));
         }
 
         $delete = $this->barang->delete($cekBarang->id_barang);
@@ -143,6 +145,6 @@ class Peralatan extends Admin_Controller
         } else {
             $this->session->set_flashdata('gagal', 'Data gagal dihapus!');
         }
-        redirect('peralatan');
+        redirect('bangunan');
     }
 }

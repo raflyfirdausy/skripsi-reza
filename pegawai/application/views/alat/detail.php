@@ -2,7 +2,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12">
-                <h4 class="page-title">Tambah Kartu Inventaris Peralatan dan Mesin</h4>
+                <h4 class="page-title">Detail Kartu Inventaris Peralatan dan Mesin</h4>
             </div>
         </div>
     </div>
