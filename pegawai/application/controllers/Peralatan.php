@@ -134,7 +134,7 @@ class Peralatan extends Admin_Controller
         $cekBarang  = $this->barang->where(["kode_barang" => $kode])->get();
         if (!$cekBarang) {
             $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
-            redirect(base_url("tanah"));
+            redirect(base_url("peralatan"));
         }
 
         $delete = $this->barang->delete($cekBarang->id_barang);
