@@ -61,3 +61,6 @@ $route['dokumen-pegawai/detail/(:any)']['post'] = "dokumen-pegawai/hapus";
 
 $route['tanah/tambah']['post']          = 'tanah/proses_tambah';
 $route['tanah/edit/(:any)']['post']     = 'tanah/proses_edit';
+
+$route['peralatan/tambah']['post']      = 'peralatan/proses_tambah';
+$route['peralatan/edit/(:any)']['post'] = 'peralatan/proses_edit';

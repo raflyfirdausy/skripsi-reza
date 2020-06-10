@@ -2,7 +2,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12">
-                <h4 class="page-title">Edit Kartu Inventaris Barang Tanah</h4>
+                <h4 class="page-title">Tambah Kartu Inventaris Peralatan dan Mesin</h4>
             </div>
         </div>
     </div>
@@ -33,13 +33,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Nama Barang</label>
-                                        <input value="<?= $tanah->barang->nama_barang ?>" type="text" class="form-control" name="nama_barang" required>
+                                        <input  value="<?= $alat->barang->nama_barang ?>" type="text" class="form-control" name="nama_barang" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Kode Barang</label>
-                                        <input disabled value="<?= $tanah->barang->kode_barang ?>" type="text" class="form-control" name="kode_barang" required>
+                                        <input disabled value="<?= $alat->barang->kode_barang ?>" type="text" class="form-control" name="kode_barang" required>
                                     </div>
                                 </div>
                             </div>
@@ -47,28 +47,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Kode Register</label>
-                                        <input value="<?= $tanah->barang->register_barang ?>" type="text" class="form-control" name="register_barang">
+                                        <input  value="<?= $alat->barang->register_barang ?>" type="text" class="form-control" name="register_barang">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Luas Tanah (m2)</label>
-                                        <input value="<?= $tanah->luas_tanah ?>"  type="number" class="form-control" name="luas_tanah">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row col-md-12">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Tahun Pengadaan</label>
-                                        <input value="<?= $tanah->tahun_pengadaan ?>" type="number" class="form-control" name="tahun_pengadaan">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Letak / Alamat</label>
-                                        <input value="<?= $tanah->letak_tanah ?>" type="text" class="form-control" name="letak_tanah">
+                                        <label for="recipient-name" class="control-label">Merk / Type</label>
+                                        <input  value="<?= $alat->merk_peralatan ?>" type="text" class="form-control" name="merk_peralatan">
                                     </div>
                                 </div>
                             </div>
@@ -76,29 +61,14 @@
                             <div class="row col-md-12">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Hak Status Tanah</label>
-                                        <input value="<?= $tanah->hak_tanah ?>" type="text" class="form-control" name="hak_tanah">
+                                        <label for="recipient-name" class="control-label">Ukuran / CC</label>
+                                        <input  value="<?= $alat->ukuran_peralatan ?>" type="text" class="form-control" name="ukuran_peralatan">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Tanggal Sertifikat Tanah</label>
-                                        <input value="<?= $tanah->tanggal_tanah ?>" type="date" class="form-control" name="tanggal_tanah">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row col-md-12">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Nomor Sertifikat Tanah</label>
-                                        <input value="<?= $tanah->nomor_tanah ?>"  type="text" class="form-control" name="nomor_tanah">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Penggunaan</label>
-                                        <input value="<?= $tanah->penggunaan_tanah ?>" type="text" class="form-control" name="penggunaan_tanah">
+                                        <label for="recipient-name" class="control-label">Bahan</label>
+                                        <input  value="<?= $alat->bahan_peralatan ?>" type="text" class="form-control" name="bahan_peralatan">
                                     </div>
                                 </div>
                             </div>
@@ -106,14 +76,59 @@
                             <div class="row col-md-12">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Asal Usul</label>
-                                        <input value="<?= $tanah->asal_tanah ?>" type="text" class="form-control" name="asal_tanah">
+                                        <label for="recipient-name" class="control-label">Tahun Pembelian</label>
+                                        <input  value="<?= $alat->tahun_peralatan ?>" type="number" maxlength="4" class="form-control" name="tahun_peralatan">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="recipient-name" class="control-label">Harga (Rp)</label>
-                                        <input value="<?= $tanah->harga_tanah ?>" type="number" class="form-control" name="harga_tanah">
+                                        <label for="recipient-name" class="control-label">Nomor Pabrik</label>
+                                        <input  value="<?= $alat->nopabrik_peralatan ?>" type="text" class="form-control" name="nopabrik_peralatan">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Nomor Rangka</label>
+                                        <input  value="<?= $alat->norangka_peralatan ?>" type="text" class="form-control" name="norangka_peralatan">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Nomor Mesin</label>
+                                        <input  value="<?= $alat->nomesin_peralatan ?>" type="text" class="form-control" name="nomesin_peralatan">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Nomor Polisi</label>
+                                        <input  value="<?= $alat->nopolisi_peralatan ?>" type="text" class="form-control" name="nopolisi_peralatan">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Nomor BPKB</label>
+                                        <input  value="<?= $alat->nobpkb_peralatan ?>" type="text" class="form-control" name="nobpkb_peralatan">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Asal - Usul Cara Perolehan</label>
+                                        <input  value="<?= $alat->asal_peralatan ?>" type="text" class="form-control" name="asal_peralatan">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Harga</label>
+                                        <input  value="<?= $alat->harga_peralatan ?>" type="number" class="form-control" name="harga_peralatan">
                                     </div>
                                 </div>
                             </div>
@@ -122,16 +137,16 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Keterangan</label>
-                                        <input value="<?= $tanah->barang->keterangan_barang ?>" type="text" class="form-control" name="keterangan_barang">
+                                        <input   value="<?= $alat->barang->keterangan_barang ?>" type="text" class="form-control" name="keterangan_barang">
                                     </div>
                                 </div>
-                            </div>
+                            </div>  
                             <div class="form-group float-right" id="simpan_data">
-                                <input type="hidden" name="id_detail" value="<?= $tanah->id_detail ?>">
-                                <input type="hidden" name="id_barang" value="<?= $tanah->barang->id_barang ?>">
-                                <a href="<?= base_url("tanah") ?>" class="btn btn-danger"> <i class="fa fa-close"></i> Batal</a>
+                                <input type="hidden" name="id_detail" value="<?= $alat->id_detail ?>">
+                                <input type="hidden" name="id_barang" value="<?= $alat->barang->id_barang ?>">
+                                <a href="<?= base_url("peralatan") ?>" class="btn btn-danger"> <i class="fa fa-close"></i> Batal</a>
                                 <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Simpan</button>
-                            </div>
+                            </div>                         
                         </form>
                     </div>
                 </div>

@@ -1,24 +1,24 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Tanah extends Admin_Controller
+class Peralatan extends Admin_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model("Detail_tanah_model", "tanah");
+        $this->load->model("Detail_peralatan_model", "alat");
     }
 
     public function index()
     {
-        $data["tanah"]  = $this->tanah->show();
+        $data["alat"]  = $this->alat->show();
         // d($data);
-        $this->loadViewAdmin("tanah/index", $data);
+        $this->loadViewAdmin("alat/index", $data);
     }
 
     public function tambah()
     {
-        $this->loadViewAdmin("tanah/tambah");
+        $this->loadViewAdmin("alat/tambah");
     }
 
     public function proses_tambah()
@@ -26,11 +26,10 @@ class Tanah extends Admin_Controller
         $input      = (object) $this->input->post();
         $cekBarang  = $this->barang->where(["kode_barang" => $input->kode_barang])->get();
 
-
         if (!$cekBarang) {
             //* TODO : INSERT INTO TABLE BARANG
             $dataInsertBarang = [
-                "id_jenis"          => "1",
+                "id_jenis"          => "2",
                 "nama_barang"       => $input->nama_barang,
                 "kode_barang"       => $input->kode_barang,
                 "register_barang"   => $input->register_barang,
@@ -38,20 +37,22 @@ class Tanah extends Admin_Controller
             ];
             $insertBarang = $this->barang->insert($dataInsertBarang);
             if ($insertBarang) {
-                $dataInsertTanah = [
+                $dataInsert = [
                     "id_barang"         => $insertBarang,
-                    "luas_tanah"        => $input->luas_tanah,
-                    "tahun_pengadaan"   => $input->tahun_pengadaan,
-                    "letak_tanah"       => $input->letak_tanah,
-                    "hak_tanah"         => $input->hak_tanah,
-                    "tanggal_tanah"     => $input->tanggal_tanah,
-                    "nomor_tanah"       => $input->nomor_tanah,
-                    "penggunaan_tanah"  => $input->penggunaan_tanah,
-                    "asal_tanah"        => $input->asal_tanah,
-                    "harga_tanah"       => $input->harga_tanah,
+                    "merk_peralatan"    => $input->merk_peralatan,
+                    "ukuran_peralatan"  => $input->ukuran_peralatan,
+                    "bahan_peralatan"   => $input->bahan_peralatan,
+                    "tahun_peralatan"   => $input->tahun_peralatan,
+                    "nopabrik_peralatan" => $input->nopabrik_peralatan,
+                    "norangka_peralatan" => $input->norangka_peralatan,
+                    "nomesin_peralatan" => $input->nomesin_peralatan,
+                    "nopolisi_peralatan" => $input->nopolisi_peralatan,
+                    "nobpkb_peralatan"  => $input->nobpkb_peralatan,
+                    "asal_peralatan"    => $input->asal_peralatan,
+                    "harga_peralatan"   => $input->harga_peralatan,
                 ];
-                $insertTanah = $this->tanah->insert($dataInsertTanah);
-                if ($insertTanah) {
+                $insert = $this->alat->insert($dataInsert);
+                if ($insert) {
                     $this->session->set_flashdata("sukses", "Berhasil menambahkan data " . $input->nama_barang);
                 } else {
                     $this->session->set_flashdata("gagal", "Terjadi kesalahan saat menambahkan data tanah");
@@ -62,7 +63,19 @@ class Tanah extends Admin_Controller
         } else {
             $this->session->set_flashdata("gagal", "Kode barang sudah terdaftar pada " . $cekBarang->nama_barang . ". Silahkan gunakan kode barang yang lain");
         }
-        redirect(base_url("tanah/tambah"));
+        redirect(base_url("peralatan/tambah"));
+    }
+
+    public function detail($kode = null)
+    {
+        $cekBarang  = $this->barang->where(["kode_barang" => $kode])->get();
+        if (!$cekBarang) {
+            $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
+            redirect(base_url("tanah"));
+        }
+        $data["alat"]  = $this->alat->show($cekBarang->id_barang);
+        // d($data);
+        $this->loadViewAdmin("alat/detail", $data);
     }
 
     public function edit($kode = null)
@@ -70,10 +83,10 @@ class Tanah extends Admin_Controller
         $cekBarang  = $this->barang->where(["kode_barang" => $kode])->get();
         if (!$cekBarang) {
             $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
-            redirect(base_url("tanah"));
+            redirect(base_url("peralatan"));
         }
-        $data["tanah"]  = $this->tanah->show($cekBarang->id_barang);
-        $this->loadViewAdmin("tanah/edit", $data);
+        $data["alat"]  = $this->alat->show($cekBarang->id_barang);
+        $this->loadViewAdmin("alat/edit", $data);
     }
 
     public function proses_edit()
@@ -86,25 +99,26 @@ class Tanah extends Admin_Controller
             "register_barang"   => $input->register_barang,
             "keterangan_barang" => $input->keterangan_barang
         ];
-        
+
         $updateBarang = $this->barang->update($dataUpdateBarang, $input->id_barang);
         if ($updateBarang) {
-            //TODO : UPDATE DETAIL BARANG
             $dataUpdateDetail = [
-                "luas_tanah"        => $input->luas_tanah,
-                "tahun_pengadaan"   => $input->tahun_pengadaan,
-                "letak_tanah"       => $input->letak_tanah,
-                "hak_tanah"         => $input->hak_tanah,
-                "tanggal_tanah"     => $input->tanggal_tanah,
-                "nomor_tanah"       => $input->nomor_tanah,
-                "penggunaan_tanah"  => $input->penggunaan_tanah,
-                "asal_tanah"        => $input->asal_tanah,
-                "harga_tanah"       => $input->harga_tanah,
+                "merk_peralatan"    => $input->merk_peralatan,
+                "ukuran_peralatan"  => $input->ukuran_peralatan,
+                "bahan_peralatan"   => $input->bahan_peralatan,
+                "tahun_peralatan"   => $input->tahun_peralatan,
+                "nopabrik_peralatan" => $input->nopabrik_peralatan,
+                "norangka_peralatan" => $input->norangka_peralatan,
+                "nomesin_peralatan" => $input->nomesin_peralatan,
+                "nopolisi_peralatan" => $input->nopolisi_peralatan,
+                "nobpkb_peralatan"  => $input->nobpkb_peralatan,
+                "asal_peralatan"    => $input->asal_peralatan,
+                "harga_peralatan"   => $input->harga_peralatan,
             ];
-            $updateDetail = $this->tanah->update($dataUpdateDetail, $input->id_detail);
+            $updateDetail = $this->alat->update($dataUpdateDetail, $input->id_detail);
             if ($updateDetail) {
                 $this->session->set_flashdata('sukses', 'Data berhasil diperbaharui!');
-                redirect('tanah');
+                redirect('peralatan');
             } else {
                 $this->session->set_flashdata('gagal', 'Data gagal diperbarui');
                 redirect($_SERVER['HTTP_REFERER']);
@@ -113,17 +127,6 @@ class Tanah extends Admin_Controller
             $this->session->set_flashdata('gagal', 'Data gagal diperbarui, Kode barang tidak boleh sama dengan yang lain!');
             redirect($_SERVER['HTTP_REFERER']);
         }
-    }
-
-    public function detail($kode = null)
-    {
-        $cekBarang  = $this->barang->where(["kode_barang" => $kode])->get();
-        if (!$cekBarang) {
-            $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
-            redirect(base_url("tanah"));
-        }
-        $data["tanah"]  = $this->tanah->show($cekBarang->id_barang);
-        $this->loadViewAdmin("tanah/detail", $data);
     }
 
     public function hapus($kode)
@@ -140,6 +143,6 @@ class Tanah extends Admin_Controller
         } else {
             $this->session->set_flashdata('gagal', 'Data gagal dihapus!');
         }
-        redirect('tanah');
+        redirect('peralatan');
     }
 }
