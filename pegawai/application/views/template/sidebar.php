@@ -35,7 +35,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">
+                            <a href="<?= base_url("jalan") ?>" class="sidebar-link">
                                 <i class="mdi mdi-adjust"></i>
                                 <span class="hide-menu">Jalan, Irigasi, dan Jaringan </span>
                             </a>
