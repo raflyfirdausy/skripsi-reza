@@ -13,7 +13,11 @@ class Peminjaman extends Admin_Controller
 
     public function index()
     {
-        $data["peminjaman"] = null;
+        $data["peminjaman"] = $this->peminjaman
+            ->as_array()
+            ->with_detail()
+            ->order_by("created_at", "DESC")
+            ->get_all();
         $this->loadViewAdmin("peminjaman/index", $data);
     }
 
@@ -26,8 +30,6 @@ class Peminjaman extends Admin_Controller
     public function proses_tambah()
     {
         $input = (object) $this->input->post();
-        // d($input);
-
 
         if (sizeof($input->barang) > 0) {
             //TODO : INPUT INTO TABLE PEMINJAMAN FOR GET ID
@@ -53,7 +55,7 @@ class Peminjaman extends Admin_Controller
                         "banyak_barang"     => $d["banyak"]
                     ];
                     array_push($dataDetail, $item);
-                }                
+                }
                 $insertDetail = $this->detail->insert($dataDetail);
                 if ($insertDetail) {
                     $this->session->set_flashdata("sukses", "Berhasil menambahkan data peminjaman dengan kode peminjaman " . $kodePeminjaman);
@@ -67,5 +69,40 @@ class Peminjaman extends Admin_Controller
             $this->session->set_flashdata("gagal", "Kamu belum memilih barang apapun");
         }
         redirect(base_url("peminjaman/tambah"));
+    }
+
+    public function detail($kode)
+    {
+        $cekPeminjaman  = $this->peminjaman->where(["kode_peminjaman" => $kode])->get();
+        if (!$cekPeminjaman) {
+            $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
+            redirect(base_url("peminjaman"));
+        }
+
+        $peminjaman = $this->peminjaman            
+            ->with_detail(["with"  => ["relation"  => "barang"]])
+            ->order_by("created_at", "DESC")
+            ->where(["kode_peminjaman" => $kode])
+            ->get();        
+
+        $data["detail"] = $peminjaman;
+        $this->loadViewAdmin("peminjaman/detail", $data);
+    }
+
+    public function hapus($kode)
+    {
+        $cekPeminjaman  = $this->peminjaman->where(["kode_peminjaman" => $kode])->get();
+        if (!$cekPeminjaman) {
+            $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
+            redirect(base_url("peminjaman"));
+        }
+
+        $delete = $this->peminjaman->delete($cekPeminjaman->id_peminjaman);
+        if ($delete) {
+            $this->session->set_flashdata('sukses', 'Data berhasil dihapus!');
+        } else {
+            $this->session->set_flashdata('gagal', 'Data gagal dihapus!');
+        }
+        redirect('peminjaman');
     }
 }

@@ -2,7 +2,7 @@
     <div class="page-breadcrumb">
         <div class="row">
             <div class="col-12">
-                <h4 class="page-title">Kartu Inventaris Barang Jalan, Irigasi, dan Jaringan</h4>
+                <h4 class="page-title">Daftar Peminjaman Barang</h4>
             </div>
         </div>
     </div>
@@ -50,16 +50,22 @@
                                     <?php if ($peminjaman) : ?>
                                         <?php $no = 1;
                                         foreach ($peminjaman as $data) : ?>
+
+                                            <?php $total = 0;
+                                            foreach ($data["detail"] as $item) : ?>
+                                                <?php $total += $item->banyak_barang; ?>
+                                            <?php endforeach ?>
                                             <tr>
                                                 <td style="padding: 5px;" class="align-middle text-center"><?= $no++ ?></td>
-                                                <td style="padding: 5px;" class="align-middle"><?= $data->nama_peminjaman ?></td>
-                                                <td style="padding: 5px;" class="align-middle"><?= $data->keperluan_peminjaman?></td>
-                                                <td style="padding: 5px;" class="align-middle"><?= $data->waktupinjam_peminjaman ?></td>
-                                                <td style="padding: 5px;" class="align-middle"><?= $data->waktukembali_peminjaman?></td>
-                                                <td style="padding: 5px;" class="align-middle">1</td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["kode_peminjaman"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["nama_peminjaman"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["keperluan_peminjaman"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["waktupinjam_peminjaman"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["waktukembali_peminjaman"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $total ?> Barang</td>
                                                 <td style="padding: 5px;" class="align-middle text-center">
-                                                    <a href="<?= base_url("jalan/detail/" . $data->barang->kode_barang) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
-                                                    <a href="<?= base_url("jalan/hapus/" . $data->barang->kode_barang) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data <?= $data->barang->nama_barang ?> ?');">Hapus</a>
+                                                    <a href="<?= base_url("peminjaman/detail/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
+                                                    <a href="<?= base_url("peminjaman/hapus/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data peminjaman <?= $data['kode_peminjaman'] ?> ?');">Hapus</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach ?>
