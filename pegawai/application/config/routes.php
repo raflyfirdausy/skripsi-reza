@@ -73,3 +73,5 @@ $route['jalan/edit/(:any)']['post']     = 'jalan/proses_edit';
 
 $route['lain/tambah']['post']           = 'lain/proses_tambah';
 $route['lain/edit/(:any)']['post']      = 'lain/proses_edit';
+
+$route['peminjaman/tambah']['post']     = 'peminjaman/proses_tambah';

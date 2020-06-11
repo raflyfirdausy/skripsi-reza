@@ -98,6 +98,7 @@ $autoload['helper'] = array(
     "form",
     'file',
     "array",
+    "date",
     "download",
     "inflector",
     "setting",

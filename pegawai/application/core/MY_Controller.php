@@ -16,7 +16,8 @@ class MY_Controller extends CI_Controller
             "CI"                => $CI,
             "aktif"             => NULL,
             "user_data"         => $userData,
-            "title"             => ucwords(str_replace("_", " ", $this->router->fetch_class()))
+            "title"             => ucwords(str_replace("_", " ", $this->router->fetch_class())),
+            "SidebarType"       => "full",
         ];
     }
 
