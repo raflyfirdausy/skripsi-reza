@@ -57,7 +57,7 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                    <a class="sidebar-link waves-effect waves-dark sidebar-link"  href="<?= base_url("pengembalian") ?>" aria-expanded="false">
                         <i class="mdi mdi-image-filter-tilt-shift"></i>
                         <span class="hide-menu">Pengembalian</span>
                     </a>

@@ -84,10 +84,9 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group float-right" id="simpan_data">
                                 <a href="<?= base_url("peminjaman") ?>" class="btn btn-danger"> <i class="fa fa-close"></i> Batal</a>
-                                <button type="submit" class="btn btn-success"> <i class="fa fa-plus"></i> Tambah Data</button>
+                                <button type="submit" class="btn btn-success"> <i class="fa fa-plus"></i> Tambah Data Peminjaman</button>
                             </div>
                         </form>
                     </div>

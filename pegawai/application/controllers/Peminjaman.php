@@ -14,6 +14,7 @@ class Peminjaman extends Admin_Controller
     public function index()
     {
         $data["peminjaman"] = $this->peminjaman
+            ->where(["status_peminjaman" => 1])
             ->as_array()
             ->with_detail()
             ->order_by("created_at", "DESC")
@@ -71,6 +72,118 @@ class Peminjaman extends Admin_Controller
         redirect(base_url("peminjaman/tambah"));
     }
 
+    public function bukti($kode)
+    {
+        $cekPeminjaman  = $this->peminjaman
+            ->as_array()
+            ->with_detail(["with"  => ["relation"  => "barang"]])
+            ->where(["kode_peminjaman" => $kode, "status_peminjaman" => 1])
+            ->get();
+        if (!$cekPeminjaman) {
+            $this->session->set_flashdata('gagal', 'Kode peminjaman ' . $kode . " tidak ditemukan!");
+            redirect(base_url("pengembalian"));
+        }
+
+        for ($a = 0; $a < sizeof($cekPeminjaman["detail"]); $a++) {
+            if (!isset($cekPeminjaman["detail"][$a]->barang)) {
+                $barang = $this->barang
+                    ->as_array()
+                    ->where(["id_barang" => $cekPeminjaman["detail"][$a]->id_barang])
+                    ->with_trashed()
+                    ->get();
+                $cekPeminjaman["detail"][$a]->barang = $barang;
+            }
+        }
+
+        // d($cekPeminjaman);
+        $nama_peminjam  = $cekPeminjaman["nama_peminjaman"];
+
+        $inputFileType  = 'Xlsx';
+        $inputFileName  = "assets/template/peminjaman.xlsx";
+        $reader         = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+        $spreadsheet    = $reader->load($inputFileName);
+        $worksheet      = $spreadsheet->getActiveSheet();
+
+        $styleBorder = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ],
+            ],
+            'alignment' => [
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'wrapText'      => TRUE
+            ]
+        ];
+       
+        $worksheet->getCell('A6')->setValue("Kode Peminjaman : " . $kode);
+
+        $worksheet->getCell('C13')->setValue(": " . $nama_peminjam);
+        $worksheet->getCell('C14')->setValue(": " . $cekPeminjaman["keperluan_peminjaman"]);
+        $worksheet->getCell('C15')->setValue(": " . $cekPeminjaman["waktupinjam_peminjaman"]);
+        $worksheet->getCell('C16')->setValue(": " . $cekPeminjaman["waktukembali_peminjaman"]);
+
+        $detail = (array) $cekPeminjaman["detail"];
+        $baris  = 19;
+        $awal   = $baris;
+        $no     = 1;
+        for ($x = 0; $x < sizeof($detail); $x++) {
+            $barang = (array) $detail[$x]->barang;
+            $worksheet->getCell('A' . $baris)->setValue($no++);
+            $worksheet->getCell('B' . $baris)->setValue($barang["kode_barang"]);
+            $worksheet->getCell('C' . $baris)->setValue($barang["nama_barang"]);
+            $worksheet->getCell('D' . $baris)->setValue($detail[$x]->banyak_barang);
+            $baris++;
+        }
+
+        $kolomAkhir = $worksheet->getHighestDataColumn();
+        $barisAkhir = $worksheet->getHighestRow();
+
+        $worksheet->getStyle('A' . $awal . ':' .
+            $kolomAkhir . $barisAkhir)
+            ->applyFromArray($styleBorder);
+
+        $awalMerge  = "A" . ($barisAkhir + 2);
+        $akhirMerge = "D" . ($barisAkhir + 3);
+        $spreadsheet->getActiveSheet()->mergeCells($awalMerge . ":" . $akhirMerge);
+
+        $worksheet->getCell('A' . $worksheet->getHighestRow())->setValue("Selanjutnya akan bertanggung jawab penuh terhadap barang-barang tersebut dan akan segera dikembalikan setelah kegiatan selesai.");
+        $spreadsheet->getActiveSheet()->getStyle('A' . $worksheet->getHighestRow())->getAlignment()->setWrapText(true);
+
+        $spreadsheet->getActiveSheet()->mergeCells('A' . ($barisAkhir + 4) . ":" . 'D' . ($barisAkhir + 4));
+        $worksheet->getCell('A' . $worksheet->getHighestRow())->setValue("Demikian bukti peminjaman peralatan ini dibuat.");
+
+        $spreadsheet->getActiveSheet()->mergeCells('C' . ($barisAkhir + 6) . ":" . 'D' . ($barisAkhir + 6));
+        $worksheet->getCell('C' . $worksheet->getHighestRow())->setValue("Kabunderan " . date("j M Y"));
+        $spreadsheet->getActiveSheet()->getStyle('C' . $worksheet->getHighestRow())->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);;
+
+        $worksheet->getCell('B' . ($barisAkhir + 7))->setValue("Pemberi Pinjaman");
+        $spreadsheet->getActiveSheet()->getStyle('B' . $worksheet->getHighestRow())->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('D' . $worksheet->getHighestRow())->setValue("Peminjam");
+        $spreadsheet->getActiveSheet()->getStyle('D' . $worksheet->getHighestRow())->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+
+        $worksheet->getCell('B' . ($barisAkhir + 11))->setValue("___________________");
+        $worksheet->getCell('D' . ($barisAkhir + 11))->setValue($nama_peminjam);
+        $spreadsheet->getActiveSheet()->getStyle('B' . $worksheet->getHighestRow())->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $spreadsheet->getActiveSheet()->getStyle('D' . $worksheet->getHighestRow())->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+
+        //TODO : WRITE AND DOWNLOAD
+        $fileName   = "BUKTI_PEMINJAMAN_" . $kode . "_" . $nama_peminjam . "_" . date("Y.m.d.H.i.s");
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $fileName . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+
+        // $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Dompdf');        
+        // header('Content-Type: application/pdf');
+        // header('Content-Disposition: attachment;filename="' . $fileName . '.pdf"');
+        // header('Cache-Control: max-age=0');
+        // $writer->save('php://output');
+    }
+
     public function detail($kode)
     {
         $cekPeminjaman  = $this->peminjaman->where(["kode_peminjaman" => $kode])->get();
@@ -79,11 +192,11 @@ class Peminjaman extends Admin_Controller
             redirect(base_url("peminjaman"));
         }
 
-        $peminjaman = $this->peminjaman            
+        $peminjaman = $this->peminjaman
             ->with_detail(["with"  => ["relation"  => "barang"]])
             ->order_by("created_at", "DESC")
             ->where(["kode_peminjaman" => $kode])
-            ->get();        
+            ->get();
 
         $data["detail"] = $peminjaman;
         $this->loadViewAdmin("peminjaman/detail", $data);

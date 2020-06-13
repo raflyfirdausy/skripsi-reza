@@ -97,7 +97,7 @@
 
 
                         <div class="form-group float-right" id="simpan_data">
-                            <a href="<?= base_url("peminjaman") ?>" class="btn btn-info">Kembali</a>
+                            <a href="<?= base_url("peminjaman") ?>" class="btn btn-info">Kembali</a>                        
                         </div>
                     </div>
                 </div>

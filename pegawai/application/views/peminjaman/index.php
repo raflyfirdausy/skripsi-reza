@@ -64,6 +64,7 @@
                                                 <td style="padding: 5px;" class="align-middle"><?= $data["waktukembali_peminjaman"] ?></td>
                                                 <td style="padding: 5px;" class="align-middle"><?= $total ?> Barang</td>
                                                 <td style="padding: 5px;" class="align-middle text-center">
+                                                    <a target="_blank" href="<?= base_url("peminjaman/bukti/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-primary waves-effect waves-light" type="button">Bukti</a>
                                                     <a href="<?= base_url("peminjaman/detail/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
                                                     <a href="<?= base_url("peminjaman/hapus/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data peminjaman <?= $data['kode_peminjaman'] ?> ?');">Hapus</a>
                                                 </td>
