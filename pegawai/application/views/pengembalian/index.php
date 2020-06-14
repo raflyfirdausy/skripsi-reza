@@ -54,6 +54,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="float-right m-b-20">
+                        <a href="<?= base_url("pengembalian/export") ?>" type="button" class="btn waves-effect waves-light btn-danger">Unduh Laporan</a>
                             <button type="button" class="btn waves-effect waves-light btn-success" id="tombol-tambah" style="width: 180px;" data-toggle="modal" data-target="#kembalikanBarang">Kembalikan Barang</button>
                         </div>
                         <div class="table-responsive">
