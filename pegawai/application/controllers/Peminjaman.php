@@ -69,7 +69,7 @@ class Peminjaman extends Admin_Controller
         } else {
             $this->session->set_flashdata("gagal", "Kamu belum memilih barang apapun");
         }
-        redirect(base_url("peminjaman/tambah"));
+        redirect(base_url("peminjaman"));
     }
 
     public function bukti($kode)
@@ -117,15 +117,15 @@ class Peminjaman extends Admin_Controller
             ]
         ];
 
-        $worksheet->getCell('A6')->setValue("Kode Peminjaman : " . $kode);
+        $worksheet->getCell('A7')->setValue("Kode Peminjaman : " . $kode);
 
-        $worksheet->getCell('C13')->setValue(": " . $nama_peminjam);
-        $worksheet->getCell('C14')->setValue(": " . $cekPeminjaman["keperluan_peminjaman"]);
-        $worksheet->getCell('C15')->setValue(": " . $cekPeminjaman["waktupinjam_peminjaman"]);
-        $worksheet->getCell('C16')->setValue(": " . $cekPeminjaman["waktukembali_peminjaman"]);
+        $worksheet->getCell('C14')->setValue(": " . $nama_peminjam);
+        $worksheet->getCell('C15')->setValue(": " . $cekPeminjaman["keperluan_peminjaman"]);
+        $worksheet->getCell('C16')->setValue(": " . $cekPeminjaman["waktupinjam_peminjaman"]);
+        $worksheet->getCell('C17')->setValue(": " . $cekPeminjaman["waktukembali_peminjaman"]);
 
         $detail = (array) $cekPeminjaman["detail"];
-        $baris  = 19;
+        $baris  = 20;
         $awal   = $baris;
         $no     = 1;
         for ($x = 0; $x < sizeof($detail); $x++) {
