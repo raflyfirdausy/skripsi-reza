@@ -43,7 +43,7 @@
                         <i class="ti-menu ti-close"></i>
                     </a>
                     <div class="navbar-brand">
-                        <a href="index.html" class="logo">
+                        <a href="<?= base_url() ?>" class="logo">
                             <span class="logo-text">
                                 <h3 class="text-white m-l-5">Inventaris Aset</h3>
                             </span>
