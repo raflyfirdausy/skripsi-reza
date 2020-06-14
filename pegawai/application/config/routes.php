@@ -77,3 +77,4 @@ $route['lain/edit/(:any)']['post']      = 'lain/proses_edit';
 $route['peminjaman/tambah']['post']     = 'peminjaman/proses_tambah';
 
 $route['pengembalian']['post']          = 'pengembalian/cek';
+$route['pengembalian/detail/(:any)']['post']          = 'pengembalian/proses_kembali/$1';

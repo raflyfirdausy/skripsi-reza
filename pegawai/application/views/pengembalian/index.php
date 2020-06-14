@@ -69,6 +69,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php if ($pengembalian) : ?>
+                                        <?php $no = 1;
+                                        foreach ($pengembalian as $data) : ?>
+                                            <tr>
+                                                <td style="padding: 5px;" class="align-middle text-center"><?= $no++ ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["kode_peminjaman"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["nama_peminjaman"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["updated_at"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle"><?= $data["keterangan_peminjaman"] ?></td>
+                                                <td style="padding: 5px;" class="align-middle text-center">
+                                                    <a href="<?= base_url("pengembalian/data-pengembalian/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>                                                    
+                                                </td>
+                                            </tr>
+                                        <?php endforeach ?>
+                                    <?php endif ?>
                                 </tbody>
                             </table>
                         </div>

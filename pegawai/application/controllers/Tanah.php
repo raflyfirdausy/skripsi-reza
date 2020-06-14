@@ -32,7 +32,7 @@ class Tanah extends Admin_Controller
             $dataInsertBarang = [
                 "id_jenis"          => "1",
                 "nama_barang"       => $input->nama_barang,
-                // "kode_barang"       => $input->kode_barang,
+                "kode_barang"       => $input->kode_barang,
                 "register_barang"   => $input->register_barang,
                 "keterangan_barang" => $input->keterangan_barang,
             ];
@@ -141,5 +141,108 @@ class Tanah extends Admin_Controller
             $this->session->set_flashdata('gagal', 'Data gagal dihapus!');
         }
         redirect('tanah');
+    }
+
+    public function export()
+    {
+        $tanah  = $this->tanah->show2();
+        $inputFileType  = 'Xlsx';
+        $inputFileName  = "assets/template/tanah.xlsx";
+        $reader         = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+        $spreadsheet    = $reader->load($inputFileName);
+        $worksheet      = $spreadsheet->getActiveSheet();
+
+        $styleBorder = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ],
+            ],
+            'alignment' => [
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'wrapText'      => TRUE
+            ]
+        ];      
+
+        $baris  = 9;
+        $awal   = $baris;
+        $no     = 1;
+        $jumlahHarga = 0;
+        foreach ($tanah as $data) {
+            if (isset($data["barang"])) {
+                $data["barang"] = (array) $data["barang"];
+                $worksheet->getCell('A' . $baris)->setValue($no++);
+                $worksheet->getCell('B' . $baris)->setValue($data["barang"]["nama_barang"]);
+                $worksheet->getCell('C' . $baris)->setValue($data["barang"]["kode_barang"]);
+                $worksheet->getCell('D' . $baris)->setValue($data["barang"]["register_barang"]);
+                $worksheet->getCell('E' . $baris)->setValue($data["luas_tanah"]);
+                $worksheet->getCell('F' . $baris)->setValue($data["tahun_pengadaan"]);
+                $worksheet->getCell('G' . $baris)->setValue($data["letak_tanah"]);
+                $worksheet->getCell('H' . $baris)->setValue($data["hak_tanah"]);
+                $worksheet->getCell('I' . $baris)->setValue($data["tanggal_tanah"]);
+                $worksheet->getCell('J' . $baris)->setValue($data["nomor_tanah"]);
+                $worksheet->getCell('K' . $baris)->setValue($data["penggunaan_tanah"]);
+                $worksheet->getCell('L' . $baris)->setValue($data["asal_tanah"]);
+                $worksheet->getCell('M' . $baris)->setValue($data["harga_tanah"]);
+                $worksheet->getCell('N' . $baris)->setValue($data["barang"]["keterangan_barang"]);
+                $jumlahHarga += $data["harga_tanah"];
+                $baris++;
+            }
+        }
+
+        $spreadsheet->getActiveSheet()->mergeCells("A" . $baris . ":L" . $baris);
+        $worksheet->getCell('A' . $baris)->setValue("Jumlah");
+        $worksheet->getCell('M' . $baris)->setValue($jumlahHarga);
+        $spreadsheet->getActiveSheet()->getStyle('A' . $baris)->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);;
+
+        $kolomAkhir = $worksheet->getHighestDataColumn();
+        $barisAkhir = $worksheet->getHighestRow();
+
+        $worksheet->getStyle('A' . $awal . ':' .
+            $kolomAkhir . $barisAkhir)
+            ->applyFromArray($styleBorder);
+
+
+        $spreadsheet->getActiveSheet()->mergeCells("K" . ($baris + 2) . ":M" . ($baris + 2));
+        $spreadsheet->getActiveSheet()->getStyle('K' . ($baris + 2))->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('K' . ($baris + 2))->setValue("Kabunderan, " . date("j M Y"));
+
+        $spreadsheet->getActiveSheet()->mergeCells("B" . ($baris + 3) . ":D" . ($baris + 3));
+        $spreadsheet->getActiveSheet()->getStyle('B' . ($baris + 3))->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('B' . ($baris + 3))->setValue("Mengetahui");
+
+        $spreadsheet->getActiveSheet()->mergeCells("B" . ($baris + 4) . ":D" . ($baris + 4));
+        $spreadsheet->getActiveSheet()->getStyle('B' . ($baris + 4))->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('B' . ($baris + 4))->setValue("Kepala SKPD");
+
+        $spreadsheet->getActiveSheet()->mergeCells("B" . ($baris + 9) . ":D" . ($baris + 9));
+        $spreadsheet->getActiveSheet()->getStyle('B' . ($baris + 9))->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('B' . ($baris + 9))->setValue("(...........................................)");
+
+        $spreadsheet->getActiveSheet()->mergeCells("B" . ($baris + 10) . ":D" . ($baris + 10));
+        $spreadsheet->getActiveSheet()->getStyle('B' . ($baris + 10))->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('B' . ($baris + 10))->setValue("NIP: ..................................");
+
+        $spreadsheet->getActiveSheet()->mergeCells("K" . ($baris + 4) . ":M" . ($baris + 4));
+        $spreadsheet->getActiveSheet()->getStyle('K' . ($baris + 4))->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('K' . ($baris + 4))->setValue("Pengurus Barang");
+
+        $spreadsheet->getActiveSheet()->mergeCells("K" . ($baris + 9) . ":M" . ($baris + 9));
+        $spreadsheet->getActiveSheet()->getStyle('K' . ($baris + 9))->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('K' . ($baris + 9))->setValue("(...........................................)");
+
+        $spreadsheet->getActiveSheet()->mergeCells("K" . ($baris + 10) . ":M" . ($baris + 10));
+        $spreadsheet->getActiveSheet()->getStyle('K' . ($baris + 10))->getAlignment()->setWrapText(true)->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);;
+        $worksheet->getCell('K' . ($baris + 10))->setValue("NIP: ..................................");
+
+        //TODO : WRITE AND DOWNLOAD
+        $fileName   = "KARTU_INVENTARIS_TANAH_exported_" . date("Y.m.d.H.i.s");
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $fileName . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
     }
 }

@@ -63,12 +63,12 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item">
+                <!-- <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?= base_url('statistik') ?>" aria-expanded="false">
                         <i class="mdi mdi-image-filter-tilt-shift"></i>
                         <span class="hide-menu">Laporan</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?= base_url('ganti-password') ?>" aria-expanded="false">
