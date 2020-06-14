@@ -116,7 +116,7 @@ class Peminjaman extends Admin_Controller
                 'wrapText'      => TRUE
             ]
         ];
-       
+
         $worksheet->getCell('A6')->setValue("Kode Peminjaman : " . $kode);
 
         $worksheet->getCell('C13')->setValue(": " . $nama_peminjam);
@@ -217,5 +217,64 @@ class Peminjaman extends Admin_Controller
             $this->session->set_flashdata('gagal', 'Data gagal dihapus!');
         }
         redirect('peminjaman');
+    }
+
+    public function export()
+    {
+        $peminjaman = $this->peminjaman
+            ->where(["status_peminjaman" => 1])
+            ->as_array()
+            ->with_detail()
+            ->order_by("created_at", "ASC")
+            ->get_all();
+
+        $inputFileType  = 'Xlsx';
+        $inputFileName  = "assets/template/laporan_peminjaman.xlsx";
+        $reader         = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($inputFileType);
+        $spreadsheet    = $reader->load($inputFileName);
+        $worksheet      = $spreadsheet->getActiveSheet();
+
+        $styleBorder = [
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                    'color' => ['rgb' => '000000'],
+                ],
+            ],
+            'alignment' => [
+                'vertical'      => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                'wrapText'      => TRUE
+            ]
+        ];
+
+        $baris  = 5;
+        $awal   = $baris;
+        $no     = 1;
+        foreach ($peminjaman as $data) {
+            $worksheet->getCell('A' . $baris)->setValue($no++);
+            $worksheet->getCell('B' . $baris)->setValue($data["kode_peminjaman"]);
+            $worksheet->getCell('C' . $baris)->setValue($data["nama_peminjaman"]);
+            $worksheet->getCell('D' . $baris)->setValue($data["keperluan_peminjaman"]);
+            $worksheet->getCell('E' . $baris)->setValue($data["waktupinjam_peminjaman"]);
+            $worksheet->getCell('F' . $baris)->setValue($data["waktukembali_peminjaman"]);
+            $worksheet->getCell('G' . $baris)->setValue(sizeof($data["detail"]));
+            $baris++;
+        }
+
+        $kolomAkhir = $worksheet->getHighestDataColumn();
+        $barisAkhir = $worksheet->getHighestRow();
+
+        $worksheet->getStyle('A' . $awal . ':' .
+            $kolomAkhir . $barisAkhir)
+            ->applyFromArray($styleBorder);
+
+        //TODO : WRITE AND DOWNLOAD
+        $fileName   = "LAPORAN_PEMINJMANAN_exported_" . date("Y.m.d.H.i.s");
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="' . $fileName . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
     }
 }
