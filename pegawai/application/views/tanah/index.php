@@ -30,7 +30,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="float-right m-b-20">
-                        <a href="<?= base_url("tanah/export") ?>" type="button" class="btn waves-effect waves-light btn-danger">Unduh Laporan</a>
+                            <a href="<?= base_url("tanah/export") ?>" type="button" class="btn waves-effect waves-light btn-danger">Unduh Laporan</a>
                             <a href="<?= base_url("tanah/tambah") ?>" type="button" class="btn waves-effect waves-light btn-success">Tambah Inventaris Tanah</a>
                         </div>
                         <div class="table-responsive">

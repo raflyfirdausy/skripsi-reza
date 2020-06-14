@@ -33,4 +33,19 @@ class Detail_jalan_model extends Custom_model
             }
         }
     }
+
+    public function show2($id_barang = null)
+    {
+        if (empty($id_barang)) {
+            $data = $this->with_barang()->as_array()->get_all();
+            return $data;
+        } else {
+            $data = $this->where(["id_barang" => $id_barang])->with_barang()->get();
+            if (empty($data->barang)) {
+                return false;
+            } else {
+                return $data;
+            }
+        }
+    }
 }

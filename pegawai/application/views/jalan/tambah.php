@@ -65,13 +65,19 @@
                             </div>
 
                             <div class="row col-md-12">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Lebar (m)</label>
                                         <input type="number" class="form-control" name="lebar_jalan">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="recipient-name" class="control-label">Luas (m2)</label>
+                                        <input type="number" class="form-control" name="luas_jalan">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="recipient-name" class="control-label">Letak / Lokasi</label>
                                         <input type="text" class="form-control" name="letak_jalan">
