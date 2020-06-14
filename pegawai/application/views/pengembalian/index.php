@@ -54,8 +54,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="float-right m-b-20">
-                        <a href="<?= base_url("pengembalian/export") ?>" type="button" class="btn waves-effect waves-light btn-danger">Unduh Laporan</a>
-                            <button type="button" class="btn waves-effect waves-light btn-success" id="tombol-tambah" style="width: 180px;" data-toggle="modal" data-target="#kembalikanBarang">Kembalikan Barang</button>
+                            <a href="<?= base_url("pengembalian/export") ?>" type="button" class="btn waves-effect waves-light btn-danger">Unduh Laporan</a>
+                            <?php if ($this->userData->level_admin == "1") : ?>
+                                <button type="button" class="btn waves-effect waves-light btn-success" id="tombol-tambah" style="width: 180px;" data-toggle="modal" data-target="#kembalikanBarang">Kembalikan Barang</button>
+                            <?php endif ?>
                         </div>
                         <div class="table-responsive">
                             <table id="alt_pagination" class="table table-striped table-bordered display" style="width:100%">
@@ -80,7 +82,7 @@
                                                 <td style="padding: 5px;" class="align-middle"><?= $data["updated_at"] ?></td>
                                                 <td style="padding: 5px;" class="align-middle"><?= $data["keterangan_peminjaman"] ?></td>
                                                 <td style="padding: 5px;" class="align-middle text-center">
-                                                    <a href="<?= base_url("pengembalian/data-pengembalian/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>                                                    
+                                                    <a href="<?= base_url("pengembalian/data-pengembalian/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
                                                 </td>
                                             </tr>
                                         <?php endforeach ?>

@@ -31,7 +31,9 @@
                     <div class="card-body">
                         <div class="float-right m-b-20">
                             <a href="<?= base_url("peralatan/export") ?>" type="button" class="btn waves-effect waves-light btn-danger">Unduh Laporan</a>
-                            <a href="<?= base_url("peralatan/tambah") ?>" type="button" class="btn waves-effect waves-light btn-success">Tambah Inventaris Peralatan dan Mesin</a>
+                            <?php if ($this->userData->level_admin == "1") : ?>
+                                <a href="<?= base_url("peralatan/tambah") ?>" type="button" class="btn waves-effect waves-light btn-success">Tambah Inventaris Peralatan dan Mesin</a>
+                            <?php endif ?>
                         </div>
                         <div class="table-responsive">
                             <table id="alt_pagination" class="table table-striped table-bordered display" style="width:100%">
@@ -60,8 +62,10 @@
                                                     <td style="padding: 5px;" class="align-middle"><?= $data->ukuran_peralatan ?></td>
                                                     <td style="padding: 5px;" class="align-middle text-center">
                                                         <a href="<?= base_url("peralatan/detail/" . $data->barang->kode_barang) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
-                                                        <a href="<?= base_url("peralatan/edit/" . $data->barang->kode_barang) ?>" class="btn btn-sm btn-primary waves-effect waves-light" type="button">Ubah</a>
-                                                        <a href="<?= base_url("peralatan/hapus/" . $data->barang->kode_barang) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data <?= $data->barang->nama_barang ?> ?');">Hapus</a>
+                                                        <?php if ($this->userData->level_admin == "1") : ?>
+                                                            <a href="<?= base_url("peralatan/edit/" . $data->barang->kode_barang) ?>" class="btn btn-sm btn-primary waves-effect waves-light" type="button">Ubah</a>
+                                                            <a href="<?= base_url("peralatan/hapus/" . $data->barang->kode_barang) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data <?= $data->barang->nama_barang ?> ?');">Hapus</a>
+                                                        <?php endif ?>
                                                     </td>
                                                 </tr>
                                             <?php endif ?>

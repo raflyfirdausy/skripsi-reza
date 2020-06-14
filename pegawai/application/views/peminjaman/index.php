@@ -31,7 +31,9 @@
                     <div class="card-body">
                         <div class="float-right m-b-20">
                             <a href="<?= base_url("peminjaman/export") ?>" type="button" class="btn waves-effect waves-light btn-danger">Unduh Laporan</a>
-                            <a href="<?= base_url("peminjaman/tambah") ?>" type="button" class="btn waves-effect waves-light btn-success">Tambah Peminjaman</a>
+                            <?php if ($this->userData->level_admin == "1") : ?>
+                                <a href="<?= base_url("peminjaman/tambah") ?>" type="button" class="btn waves-effect waves-light btn-success">Tambah Peminjaman</a>
+                            <?php endif ?>
                         </div>
                         <div class="table-responsive">
                             <table id="alt_pagination" class="table table-striped table-bordered display" style="width:100%">
@@ -44,7 +46,9 @@
                                         <th style=" padding: 10px;">Tanggal Pinjam</th>
                                         <th style=" padding: 10px;">Tanggal Kembali</th>
                                         <th style=" padding: 10px;">Jumlah</th>
-                                        <th style=" padding: 10px;" class="text-center">Aksi</th>
+                                        <?php if ($this->userData->level_admin == "1") : ?>
+                                            <th style=" padding: 10px;" class="text-center">Aksi</th>
+                                        <?php endif ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,11 +68,13 @@
                                                 <td style="padding: 5px;" class="align-middle"><?= $data["waktupinjam_peminjaman"] ?></td>
                                                 <td style="padding: 5px;" class="align-middle"><?= $data["waktukembali_peminjaman"] ?></td>
                                                 <td style="padding: 5px;" class="align-middle"><?= $total ?> Barang</td>
-                                                <td style="padding: 5px;" class="align-middle text-center">
-                                                    <a target="_blank" href="<?= base_url("peminjaman/bukti/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-primary waves-effect waves-light" type="button">Bukti</a>
-                                                    <a href="<?= base_url("peminjaman/detail/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
-                                                    <a href="<?= base_url("peminjaman/hapus/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data peminjaman <?= $data['kode_peminjaman'] ?> ?');">Hapus</a>
-                                                </td>
+                                                <?php if ($this->userData->level_admin == "1") : ?>
+                                                    <td style="padding: 5px;" class="align-middle text-center">
+                                                        <a target="_blank" href="<?= base_url("peminjaman/bukti/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-primary waves-effect waves-light" type="button">Bukti</a>
+                                                        <a href="<?= base_url("peminjaman/detail/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
+                                                        <a href="<?= base_url("peminjaman/hapus/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data peminjaman <?= $data['kode_peminjaman'] ?> ?');">Hapus</a>
+                                                    </td>
+                                                <?php endif ?>
                                             </tr>
                                         <?php endforeach ?>
                                     <?php endif ?>

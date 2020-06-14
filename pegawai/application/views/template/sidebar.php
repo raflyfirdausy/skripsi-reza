@@ -13,7 +13,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link has-arrow waves-effect waves-dark sidebar-link" href="javascript:void(0)" aria-expanded="false">
                         <i class="mdi mdi-image-filter-tilt-shift"></i>
-                        <span class="hide-menu">Aset Desa</span>
+                        <span class="hide-menu"><?= $this->userData->level_admin == "2" ? "Laporan " : "" ?>Aset Desa</span>
                     </a>
                     <ul aria-expanded="false" class="collapse first-level">
                         <li class="sidebar-item">
@@ -52,14 +52,14 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="<?= base_url("peminjaman") ?>" aria-expanded="false">
                         <i class="mdi mdi-image-filter-tilt-shift"></i>
-                        <span class="hide-menu">Peminjaman</span>
+                        <span class="hide-menu"><?= $this->userData->level_admin == "2" ? "Laporan " : "" ?>Peminjaman</span>
                     </a>
                 </li>
 
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link"  href="<?= base_url("pengembalian") ?>" aria-expanded="false">
                         <i class="mdi mdi-image-filter-tilt-shift"></i>
-                        <span class="hide-menu">Pengembalian</span>
+                        <span class="hide-menu"><?= $this->userData->level_admin == "2" ? "Laporan " : "" ?>Pengembalian</span>
                     </a>
                 </li>
 
