@@ -83,6 +83,9 @@
                                                 <td style="padding: 5px;" class="align-middle"><?= $data["keterangan_peminjaman"] ?></td>
                                                 <td style="padding: 5px;" class="align-middle text-center">
                                                     <a href="<?= base_url("pengembalian/data-pengembalian/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
+                                                    <?php if ($this->userData->level_admin == "1") : ?>
+                                                        <a href="<?= base_url("pengembalian/hapus/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data peminjaman <?= $data['kode_peminjaman'] ?> ?');">Hapus</a>
+                                                    <?php endif ?>
                                                 </td>
                                             </tr>
                                         <?php endforeach ?>

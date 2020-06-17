@@ -62,7 +62,7 @@ class Tanah extends Admin_Controller
         } else {
             $this->session->set_flashdata("gagal", "Kode barang sudah terdaftar pada " . $cekBarang->nama_barang . ". Silahkan gunakan kode barang yang lain");
         }
-        redirect(base_url("tanah/tambah"));
+        redirect(base_url("tanah"));
     }
 
     public function edit($kode = null)
@@ -82,7 +82,7 @@ class Tanah extends Admin_Controller
         $input      = (object) $this->input->post();
         $dataUpdateBarang = [
             "nama_barang"       => $input->nama_barang,
-            "kode_barang"       => $input->kode_barang,
+            // "kode_barang"       => $input->kode_barang,
             "register_barang"   => $input->register_barang,
             "keterangan_barang" => $input->keterangan_barang
         ];

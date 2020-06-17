@@ -46,9 +46,7 @@
                                         <th style=" padding: 10px;">Tanggal Pinjam</th>
                                         <th style=" padding: 10px;">Tanggal Kembali</th>
                                         <th style=" padding: 10px;">Jumlah</th>
-                                        <?php if ($this->userData->level_admin == "1") : ?>
-                                            <th style=" padding: 10px;" class="text-center">Aksi</th>
-                                        <?php endif ?>
+                                        <th style=" padding: 10px;" class="text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,13 +66,15 @@
                                                 <td style="padding: 5px;" class="align-middle"><?= $data["waktupinjam_peminjaman"] ?></td>
                                                 <td style="padding: 5px;" class="align-middle"><?= $data["waktukembali_peminjaman"] ?></td>
                                                 <td style="padding: 5px;" class="align-middle"><?= $total ?> Barang</td>
-                                                <?php if ($this->userData->level_admin == "1") : ?>
-                                                    <td style="padding: 5px;" class="align-middle text-center">
+                                                <td style="padding: 5px;" class="align-middle text-center">
+                                                    <?php if ($this->userData->level_admin == "1") : ?>
                                                         <a target="_blank" href="<?= base_url("peminjaman/bukti/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-primary waves-effect waves-light" type="button">Bukti</a>
-                                                        <a href="<?= base_url("peminjaman/detail/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
+                                                    <?php endif ?>
+                                                    <a href="<?= base_url("peminjaman/detail/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-info waves-effect waves-light" type="button">Detail</a>
+                                                    <?php if ($this->userData->level_admin == "1") : ?>
                                                         <a href="<?= base_url("peminjaman/hapus/" . $data["kode_peminjaman"]) ?>" class="btn btn-sm btn-danger waves-effect waves-light" type="button" onclick="return confirm('Hapus data data peminjaman <?= $data['kode_peminjaman'] ?> ?');">Hapus</a>
-                                                    </td>
-                                                <?php endif ?>
+                                                    <?php endif ?>
+                                                </td>
                                             </tr>
                                         <?php endforeach ?>
                                     <?php endif ?>

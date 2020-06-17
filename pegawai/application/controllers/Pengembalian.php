@@ -185,4 +185,21 @@ class Pengembalian extends Admin_Controller
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
     }
+
+    public function hapus($kode)
+    {
+        $cekPeminjaman  = $this->peminjaman->where(["kode_peminjaman" => $kode])->get();
+        if (!$cekPeminjaman) {
+            $this->session->set_flashdata('gagal', 'Data tidak ditemukan!');
+            redirect(base_url("pengembalian"));
+        }
+
+        $delete = $this->peminjaman->delete($cekPeminjaman->id_peminjaman);
+        if ($delete) {
+            $this->session->set_flashdata('sukses', 'Data berhasil dihapus!');
+        } else {
+            $this->session->set_flashdata('gagal', 'Data gagal dihapus!');
+        }
+        redirect('pengembalian');
+    }
 }

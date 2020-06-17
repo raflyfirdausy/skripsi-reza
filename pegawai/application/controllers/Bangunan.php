@@ -64,7 +64,7 @@ class Bangunan extends Admin_Controller
         } else {
             $this->session->set_flashdata("gagal", "Kode barang sudah terdaftar pada " . $cekBarang->nama_barang . ". Silahkan gunakan kode barang yang lain");
         }
-        redirect(base_url("bangunan/tambah"));
+        redirect(base_url("bangunan"));
     }
 
     public function detail($kode = null)
