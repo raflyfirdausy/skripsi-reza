@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Masuk | Sistem Informasi Pegawai</title>
+    <title>Masuk | Aplikasi Inventaris Aset Desa Kabunderan</title>
     <link href="<?= asset('website/nice/dist/css/style.min.css') ?>" rel="stylesheet">
 </head>
 

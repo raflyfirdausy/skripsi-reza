@@ -1,3 +1,0 @@
-1. Pendaftaran
-2. Statistik (Umur, Pendidikan, Jabatan)
-3. Info Aplikasi + RSUD
