@@ -23,8 +23,8 @@
             <div class="auth-box">
                 <div id="loginform">
                     <div class="logo">
-                        <!-- <span class="db"><img src="<?= asset('website/nice/assets/images/logo-icon.png') ?>" alt="logo" /></span> -->
-                        <h4 class="font-medium m-t-10">Masuk Sistem Inventaris Aset <br> Desa Kabunderan</h4>
+                        <span class="db"><img src="<?= asset('pbg.png') ?>"  alt="logo" style="width:100px;height:100px;" /></span>
+                        <h4 class="font-medium m-t-10">Masuk Aplikasi Inventaris Aset <br> Desa Kabunderan</h4>
                     </div>
 
                     <?php if ($this->session->flashdata("gagal")) : ?>
